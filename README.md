@@ -4,7 +4,7 @@
 
 ```bash
 git clone git@github.com:mehiX/VotingApp.git
-cd votingapp
+cd VotingApp
 mv .env.tmpl .env
 # Fill in the missing values in .env
 
