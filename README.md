@@ -3,8 +3,8 @@
 ## Start
 
 ```bash
-git clone git@github.com/mehiX/VotingApp
-cd votingapp
+git clone git@github.com:mehiX/VotingApp.git
+cd VotingApp
 mv .env.tmpl .env
 # Fill in the missing values in .env
 
@@ -15,7 +15,10 @@ docker-compose up -d --build mysql redis
 docker-compose up -d --build
 
 # Check installation (Linux systems)
-if [ 200 = $(curl -sI --url http://localhost:8080/ | grep HTTP | awk '{ print $2 }') ]; then echo Installation successful!; else echo Installation failed!;
+if [ 200 = $(curl -sI --url http://localhost:8080/ | grep HTTP | awk '{ print $2 }') ]; \
+  then echo Installation successful!; \
+  else echo Installation failed!; \
+fi
 ```
 
 ## Use the application
