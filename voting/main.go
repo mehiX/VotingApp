@@ -19,7 +19,7 @@ import (
 var (
 	errMissingEnv      = "Missing env variable %s"
 	addr               string
-	redisAddr          string
+	redisAddr          = "${REDIS_HOST}:${REDIS_PORT}"
 	redisPass          string
 	clientIDcookieName = "clientID"
 )
@@ -33,11 +33,7 @@ func main() {
 		panic(fmt.Errorf(errMissingEnv, tmp))
 	}
 
-	tmp = "REDIS_ADDR"
-	redisAddr = os.Getenv(tmp)
-	if "" == redisAddr {
-		panic(fmt.Errorf(errMissingEnv, tmp))
-	}
+	redisAddr = os.ExpandEnv(redisAddr)
 
 	tmp = "REDIS_PASS"
 	redisPass = os.Getenv(tmp)

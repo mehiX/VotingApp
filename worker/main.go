@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	redisAddr             string
+	redisAddr             = "${REDIS_HOST}:${REDIS_PORT}"
 	redisPass             string
 	mysqlConnectionString = "${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(${MYSQL_HOST}:${MYSQL_PORT})/${MYSQL_DATABASE}"
 	errMissingEnv         = "Missing env variable %s"
@@ -23,10 +23,7 @@ var (
 func main() {
 	fmt.Println("Worker started")
 
-	redisAddr = os.Getenv("REDIS_ADDR")
-	if "" == redisAddr {
-		panic(fmt.Errorf(errMissingEnv, "REDIS_ADDR"))
-	}
+	redisAddr = os.ExpandEnv(redisAddr)
 
 	redisPass = os.Getenv("REDIS_PASS")
 	if "" == redisPass {

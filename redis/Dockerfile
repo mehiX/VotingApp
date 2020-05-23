@@ -1,7 +1,14 @@
 FROM redis
 
-COPY redis.conf /usr/local/etc/redis/redis.conf
+RUN apt-get update && apt-get install -y \
+  gettext-base \
+  && rm -rf /var/lib/apt/lists/*
 
-CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]
+COPY redis.conf /tmp/
+
+COPY startup.sh /
+RUN chmod a+x /startup.sh
+
+CMD ["/startup.sh"]
 
 LABEL MAINTAINER="mihai.oprea@gmail.com"

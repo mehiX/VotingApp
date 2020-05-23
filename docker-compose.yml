@@ -13,22 +13,43 @@ services:
             context: ./voting
         image: voting/voting:1.0
         env_file: .env
+        environment: 
+            - REDIS_PASS
+            - REDIS_PORT
     redis:
         build: 
             context: ./redis
         image: voting/redis:1.0
+        environment: 
+            - REDIS_PASS
+            - REDIS_PORT
     worker:
         build:
             context: ./worker
         image: voting/worker:1.0
         env_file: .env
+        environment: 
+            - REDIS_PASS
+            - REDIS_PORT
     mysql:
         image: mysql:8
-        env_file: .env
+        environment:
+            - MYSQL_USER
+            - MYSQL_PASSWORD
+            - MYSQL_HOST
+            - MYSQL_PORT
+            - MYSQL_DATABASE
+            - MYSQL_ROOT_PASSWORD
         volumes: 
             - ./mysql:/docker-entrypoint-initdb.d
     results:
         build:
             context: ./results
         image: voting/results:1.0
-        env_file: .env
+        environment:
+            - RESULTS_ADDR
+            - MYSQL_USER
+            - MYSQL_PASSWORD
+            - MYSQL_HOST
+            - MYSQL_PORT
+            - MYSQL_DATABASE

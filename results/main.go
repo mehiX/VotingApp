@@ -28,11 +28,11 @@ func main() {
 	fmt.Println("Results app started")
 
 	resultsAddr = os.Getenv("RESULTS_ADDR")
-	mysqlConnectionString = os.ExpandEnv(mysqlConnectionString)
-
 	if "" == resultsAddr {
 		panic(errors.New("Missing env variable RESULTS_ADDR"))
 	}
+
+	mysqlConnectionString = os.ExpandEnv(mysqlConnectionString)
 
 	var err error
 
@@ -85,6 +85,7 @@ func getHandler() http.Handler {
 func showResults(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("tmpl/results.html"))
 	if err := tmpl.Execute(w, nil); nil != err {
+		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -101,6 +102,7 @@ func showJSON(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(resp); nil != err {
+		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

@@ -68,6 +68,11 @@ docker run -it --rm \
 
 ## Docker topics
 
+### Dockerfile
+
+- Review [best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/). `redis/Dockerfile` shows installing additional packages based on the best practices.
+- Multi-stage builds. All the GO projects show examples of multi-stage builds. The Docker plugin for VS Code generates a Dockerfile for GO projects that is not performant: any code change invalidates the docker build cache usage for installing `git`.
+- When the command needed to run in a container becomes too big, it is a good practice to save it in a script and then call the script. Example in `redis/Dockerfile` where using `envsubst` makes the command too long.
 
 ## Docker-compose topics
 
