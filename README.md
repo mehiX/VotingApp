@@ -3,7 +3,7 @@
 ## Start
 
 ```bash
-git clone git@github.com/mehiX/VotingApp
+git clone git@github.com:mehiX/VotingApp.git
 cd votingapp
 mv .env.tmpl .env
 # Fill in the missing values in .env
