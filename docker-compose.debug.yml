@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  votingapp:
+    image: votingapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker tutorial</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <style>
+        body,
+        body>.ui.grid {
+            height: 100%;
+        }
+
+        body>.ui.grid>.column {
+            max-width: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ui middle aligned center aligned stackable grid">
+        <div class="column">
+            <h1 class="ui header">Voting App</h1>
+            <div class="ui two column grid">
+                <div class="column">
+                    <a href="/voting" class="ui fluid action button">Vote</a>
+                </div>
+                <div class="column">
+                    <a href="/results" class="ui fluid action button">Results</a>
+                </div>
+            </div>
+            <div class="ui left aligned segment">
+                <div class="ui accordion">
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        An example application using:
+                    </div>
+                    <div class="content">
+                        <div class="ui list">
+                            <div class="item"><a href="https://docs.docker.com/">Docker</a></div>
+                            <div class="item"><a href="https://docs.docker.com/compose/">Docker-compose</a></div>
+                            <div class="item"><a href="https://golang.org/ref/spec">Golang</a></div>
+                            <div class="item"><a href="https://semantic-ui.com">Semantic-UI</a></div>
+                            <div class="item"><a href="https://api.jquery.com/">jQuery</a></div>
+                            <div class="item"><a href="https://redis.io/">Redis</a></div>
+                            <div class="item"><a href="https://dev.mysql.com/">MySQL</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('.ui.accordion').accordion();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <style>
+        body,
+        body>.ui.grid {
+            height: 100%;
+        }
+
+        body>.ui.grid>.column {
+            max-width: 600px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ui middle aligned center aligned one column stackable grid">
+        <div class="column">
+            <h1 class="ui center aligned header">Vote your favorite color</h1>
+            <div class="ui middle aligned center aligned three column stackable grid">
+                <div class="column">
+                    <div class="ui fluid red button" data-value="red">RED</div>
+                </div>
+                <div class="column">
+                    <div class="ui fluid blue button" data-value="blue">BLUE</div>
+                </div>
+                <div class="column">
+                    <div class="ui fluid green button" data-value="green">GREEN</div>
+                </div>
+            </div>
+            <form action="/voting" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="vote" id="vote" value="ssss">
+            </form>
+            {{ if .Message }}
+            <div class="ui info message">
+                <p>{{ .Message }}</p>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $(".ui.button").click(function (ev) {
+                $("#vote").val($(this).attr("data-value"));
+                $("form")[0].submit();
+            });
+            setTimeout(function () {
+                $(".info.message").transition('fade');
+            }, 1500);
+        })
+    </script>
+</body>
+
+</html>

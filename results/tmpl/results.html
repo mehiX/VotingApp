@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting results</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <style>
+        body,
+        body>.ui.grid {
+            height: 100%;
+        }
+
+        body>.ui.grid>.column {
+            max-width: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ui middle aligned center aligned one column grid">
+        <div class="column">
+            <h1 class="ui header">Results</h1>
+            <div class="ui segment">
+                <div class='ui red progress'>
+                    <div class='bar'>
+                        <div class='progress'></div>
+                    </div>
+                    <div class='label'>RED</span></div>
+                </div>
+                <div class='ui green progress'>
+                    <div class='bar'>
+                        <div class='progress'></div>
+                    </div>
+                    <div class='label'>GREEN</span></div>
+                </div>
+                <div class='ui blue progress'>
+                    <div class='bar'>
+                        <div class='progress'></div>
+                    </div>
+                    <div class='label'>BLUE</span></div>
+                </div>
+            </div>
+            <div class="ui segment">
+                <p>Last refresh: <span id="time">never</span></p>
+                <p>Total votes: <span id="total">0</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            getValues();
+        })
+
+        function getValues() {
+            $.getJSON("http://localhost:8080/results/json", function (data, status) {
+                var total = 0;
+                data.forEach(element => {
+                    total += element.total
+                });
+                $(".ui.progress").progress('reset');
+                data.forEach(element => {
+                    var p = ((element.total / total) * 100).toFixed(2);
+                    $(".ui." + element.vote + ".progress").progress({
+                        percent: p,
+                        autoSuccess: false
+                    });
+                });
+
+                $("#total").html(total);
+                $("#time").html(new Date().toUTCString());
+
+                setTimeout(getValues, 1000);
+            });
+        }
+    </script>
+</body>
+
+</html>

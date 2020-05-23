@@ -1,0 +1,4 @@
+.env
+worker/worker
+voting/voting
+generator/generator

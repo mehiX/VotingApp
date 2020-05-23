@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+    proxy:
+        build:
+            context: ./proxy/
+        image: voting/proxy:1.0
+        ports:
+            - "8443:443"
+            - "8080:80"
+    voting:
+        build:
+            context: ./voting
+        image: voting/voting:1.0
+        environment: 
+            - VOTING_ADDR
+            - REDIS_ADDR
+            - REDIS_PASS
+    redis:
+        build: 
+            context: ./redis
+        image: voting/redis:1.0
+    worker:
+        build:
+            context: ./worker
+        image: voting/worker:1.0
+        env_file: .env
+    mysql:
+        image: mysql:8
+        environment: 
+            - MYSQL_DATABASE
+            - MYSQL_USER
+            - MYSQL_PASSWORD
+            - MYSQL_ROOT_PASSWORD
+        volumes: 
+            - ./mysql:/docker-entrypoint-initdb.d
+    results:
+        build:
+            context: ./results
+        image: voting/results:1.0
+        env_file: .env
