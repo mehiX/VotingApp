@@ -15,7 +15,10 @@ docker-compose up -d --build mysql redis
 docker-compose up -d --build
 
 # Check installation (Linux systems)
-if [ 200 = $(curl -sI --url http://localhost:8080/ | grep HTTP | awk '{ print $2 }') ]; then echo Installation successful!; else echo Installation failed!;
+if [ 200 = $(curl -sI --url http://localhost:8080/ | grep HTTP | awk '{ print $2 }') ]; \
+  then echo Installation successful!; \
+  else echo Installation failed!; \
+fi
 ```
 
 ## Use the application
