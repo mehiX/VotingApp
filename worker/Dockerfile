@@ -17,3 +17,4 @@ COPY --from=builder /go/bin/worker /app
 ENTRYPOINT /app
 
 LABEL Name=Worker Version=0.0.1
+LABEL MAINTAINER="mihai.oprea@gmail.com"

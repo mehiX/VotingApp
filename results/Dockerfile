@@ -18,4 +18,5 @@ COPY ./tmpl/ /tmpl/
 ENTRYPOINT /app
 
 LABEL Name=results Version=0.0.1
+LABEL MAINTAINER="mihai.oprea@gmail.com"
 EXPOSE 8080

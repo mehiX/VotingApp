@@ -62,3 +62,14 @@ docker run -it --rm \
   redis \
   redis-cli -h votingapp_redis_1
 ```
+
+## Docker topics
+
+
+## Docker-compose topics
+
+### env_file vs. environment
+
+`environment` gives precendence to host environment variables over the ones in `.env`. So if the same variable is declared in the environment and also in the `.env`, then the value in the file will be ignored. Always check the compiled docker-compose.yml with `docker-compose config`
+
+The disadvantage of the `env_file` is that all the variables end up in all environments and that might not be desirable.
