@@ -25,6 +25,25 @@ fi
 
 In a web browser navigate to `http://localhost:8080`. On Windows systems replace `localhost` with the host IP.
 
+## Votes generator
+
+Build the generator image:
+
+```bash
+cd generator
+docker build -t votingapp/generator:1.0 .
+```
+
+Start generating votes:
+
+```bash
+export PROXY_CONT=$(docker container ls --filter ancestor=voting/proxy:1.0 --format "{{.Names}}")
+docker run --rm \
+  --network container:${PROXY_CONT} \
+  votingapp/generator:1.0 \
+  -url http://proxy/voting -workers 5
+```
+
 ## NGINX
 
 Check the default server configuration:

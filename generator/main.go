@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 	"math/rand"
@@ -12,16 +13,32 @@ import (
 	"time"
 )
 
-var values = []string{"red", "green", "blue"}
-var votingURL = "http://localhost:8080/voting"
+var (
+	values    = []string{"red", "green", "blue"}
+	votingURL string
+	workers   int
+	help      bool
+)
 
 func main() {
+
+	flag.StringVar(&votingURL, "url", "http://localhost:8080/voting", "URL to post votes")
+	flag.IntVar(&workers, "workers", 10, "Number of concurrent workers")
+	flag.BoolVar(&help, "help", false, "Show this help")
+
+	flag.Parse()
+
+	if help {
+		fmt.Printf("Usage: %s\n", os.Args[0])
+		flag.PrintDefaults()
+		os.Exit(0)
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 
 	valuesStream := make(chan string)
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < workers; i++ {
 		go generateVotes(ctx, valuesStream, time.Second*time.Duration((i+1)))
 	}
 
