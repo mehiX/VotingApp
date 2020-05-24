@@ -37,9 +37,10 @@ docker build -t votingapp/generator:1.0 .
 Start generating votes:
 
 ```bash
-export PROXY_CONT=$(docker container ls --filter ancestor=voting/proxy:1.0 --format "{{.Names}}")
+export CONTAINER_NAME=$(docker container ls --filter ancestor=voting/proxy:1.0 --format "{{.Names}}")
+
 docker run --rm \
-  --network container:${PROXY_CONT} \
+  --network container:${CONTAINER_NAME} \
   votingapp/generator:1.0 \
   -url http://proxy/voting -workers 5
 ```
@@ -66,12 +67,14 @@ docker-compose up -d mysql
 Connect to the running instance:
 
 ```bash
+export CONTAINER_NAME=$(docker container ls --filter name=voting --filter ancestor=mysql --format "{{.Names}}")
+
 docker run \
   -it --rm \
   --env-file .env \
-  --network container:votingapp_mysql_1 \
+  --network container:${CONTAINER_NAME} \
   mysql \
-  sh -c 'mysql -h votingapp_mysql_1 -u${MYSQL_USER} -p${MYSQL_PASSWORD}'
+  sh -c 'mysql -h '${CONTAINER_NAME}' -u${MYSQL_USER} -p${MYSQL_PASSWORD}'
 ```
 
 ## REDIS
@@ -79,13 +82,23 @@ docker run \
 Connect to the Redis container:
 
 ```bash
+export CONTAINER_NAME=$(docker container ls --filter ancestor=redis --filter name=voting --format "{{.Names}}")
+
 docker run -it --rm \
-  --network container:votingapp_redis_1 \
+  --network container:${CONTAINER_NAME} \
   redis \
-  redis-cli -h votingapp_redis_1
+  redis-cli -h ${CONTAINER_NAME}
 ```
 
 ## Docker topics
+
+### Docker run
+
+- Use `--filter` to limit the results (see connecting to the mysql container). Mulptiple filters can be used to apply multiple criteria
+- Use `--format` to help automation: show results in a way that can be further used in automation scripts (for an example see getting only the name of a container)
+- Use `--rm` to run one-off containers and keep the system clean. Otherwise containers will still exist as stopped.
+- Use `--name` to give the container a meaningful name. Otherwise a random name is given by Docker and that is not really helpful
+- Use `--network` to connect the container to a desired network. This can be a network where another specific container is running.
 
 ### Dockerfile
 
