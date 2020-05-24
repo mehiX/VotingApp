@@ -17,15 +17,15 @@ server {
     }
 
     location /voting {
-        proxy_pass   http://voting:8080/voting;
+        proxy_pass   http://voting${VOTING_ADDR}/voting;
     }
 
     location /results/json {
-        proxy_pass http://results:8080/json;
+        proxy_pass http://results${RESULTS_ADDR}/json;
     }
 
     location /results {
-        proxy_pass http://results:8080/;
+        proxy_pass http://results${RESULTS_ADDR}/;
     }
 
 }
