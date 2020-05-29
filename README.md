@@ -8,11 +8,14 @@ cd VotingApp
 mv .env.tmpl .env
 # Fill in the missing values in .env
 
+# Start the log collector
+docker-compose up -d --build fluentd
+
 # Start the databases first
 docker-compose up -d --build mysql redis
 
 # Start the rest of the containers
-docker-compose up -d --build
+docker-compose up -d --build voting proxy results worker
 
 # Check installation (Linux systems)
 if [ 200 = $(curl -sI --url http://localhost:8080/ | grep HTTP | awk '{ print $2 }') ]; \
@@ -40,10 +43,15 @@ Start generating votes:
 export CONTAINER_NAME=$(docker container ls --filter ancestor=voting/proxy:1.0 --format "{{.Names}}")
 
 docker run --rm \
+  --name voting-generator \
   --network container:${CONTAINER_NAME} \
+  --log-driver fluentd \
+  --log-opt tag=generator \
   votingapp/generator:1.0 \
   -url http://proxy/voting -workers 5
 ```
+
+If the last command returns an error it may be that the proxy is not running. In that case the output of `echo ${CONTAINER_NAME}` is empty.
 
 ## NGINX
 
@@ -91,6 +99,10 @@ docker run -it --rm \
 ```
 
 ## Docker topics
+
+### Docker daemon
+
+- Use a different logging driver. Can be setup in `daemon.json` or using `docker run --log-driver`. Official [documentation](https://docs.docker.com/config/containers/logging/configure/). For a working example see the fluentd service and the votes generating section.
 
 ### Docker run
 

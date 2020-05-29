@@ -1,4 +1,4 @@
-version: "3"
+version: "3.2"
 
 services:
     proxy:
@@ -11,6 +11,10 @@ services:
         environment: 
             - VOTING_ADDR
             - RESULTS_ADDR
+        logging: 
+            driver: fluentd
+            options: 
+                tag: "proxy"
     voting:
         build:
             context: ./voting
@@ -19,6 +23,10 @@ services:
         environment: 
             - REDIS_PASS
             - REDIS_PORT
+        logging: 
+            driver: fluentd
+            options: 
+                tag: "voting"
     redis:
         build: 
             context: ./redis
@@ -26,6 +34,10 @@ services:
         environment: 
             - REDIS_PASS
             - REDIS_PORT
+        logging: 
+            driver: fluentd
+            options: 
+                tag: "redis"
     worker:
         build:
             context: ./worker
@@ -34,6 +46,10 @@ services:
         environment: 
             - REDIS_PASS
             - REDIS_PORT
+        logging: 
+            driver: fluentd
+            options: 
+                tag: "worker"
     mysql:
         image: mysql:8
         environment:
@@ -45,6 +61,10 @@ services:
             - MYSQL_ROOT_PASSWORD
         volumes: 
             - ./mysql:/docker-entrypoint-initdb.d
+        logging: 
+            driver: fluentd
+            options: 
+                tag: "mysql"
     results:
         build:
             context: ./results
@@ -56,3 +76,21 @@ services:
             - MYSQL_HOST
             - MYSQL_PORT
             - MYSQL_DATABASE
+        logging: 
+            driver: fluentd
+            options: 
+                tag: "results"
+    fluentd:
+        image: voting/fluentd:1.0
+        build: 
+            context: ./fluentd
+        ports:
+            - "24224:24224"
+            - "24224:24224/udp"
+        volumes: 
+            - fluentd-logs:/fluentd/log
+        environment: 
+            - FLUENTD_CONF=main.conf
+
+volumes: 
+    fluentd-logs:
