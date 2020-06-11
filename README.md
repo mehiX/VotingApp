@@ -21,7 +21,6 @@ Go to the cloned directory and typ "vagrant up" the virtual machine will now be 
 ```bash
 git clone git@github.com:mehiX/VotingApp.git
 cd VotingApp
-mv .env.tmpl .env
 
 # Start the log collector
 docker-compose up -d --build fluentd
