@@ -4,15 +4,15 @@
 
 In order to participate you need to make sure that you've installed several tools:
 
-1.) a GIT client of your choosing, 
-2.) a working Vagrant (v2.2.9 or higher)(https://www.vagrantup.com/) 
-3.) and a working virtualbox (6.1 or higher)(https://www.virtualbox.org/)
+1. a GIT client of your choosing, 
+2. a working Vagrant (v2.2.9 or higher)(https://www.vagrantup.com/) 
+3. and a working virtualbox (6.1 or higher)(https://www.virtualbox.org/)
 
-Vagrant works through the command prompt/line and is installed here: C:\HashiCorp\Vagrant\bin\vagrant.exe
+Vagrant works through the command prompt/line and is installed here: `C:\HashiCorp\Vagrant\bin\vagrant.exe`
 
-In order to create a VirtualMachine through Vagrant you need a Vagrantfile which can be cloned ........ here
+In order to create a VirtualMachine through Vagrant you need a Vagrantfile which can be cloned ........ here (WHAT IS OUR STRATEGY FOR THE Vagrantfile?)
 
-Go to the cloned directory and typ "vagrant up" the virtual machine will now be initialized according to your Vagrantfile
+Go to the cloned directory and typ `vagrant up` the virtual machine will now be initialized according to your Vagrantfile
 
 
 
