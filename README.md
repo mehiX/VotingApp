@@ -1,12 +1,27 @@
 # VotingApp - a docker tutorial
 
-## Start
+## Prequisites
+
+In order to participate you need to make sure that you've installed several tools:
+
+1.) a GIT client of your choosing, 
+2.) a working Vagrant (v2.2.9 or higher)(https://www.vagrantup.com/) 
+3.) and a working virtualbox (6.1 or higher)(https://www.virtualbox.org/)
+
+Vagrant works through the command prompt/line and is installed here: C:\HashiCorp\Vagrant\bin\vagrant.exe
+
+In order to create a VirtualMachine through Vagrant you need a Vagrantfile which can be cloned ........ here
+
+Go to the cloned directory and typ "vagrant up" the virtual machine will now be initialized according to your Vagrantfile
+
+
+
+## Start the technical part
 
 ```bash
 git clone git@github.com:mehiX/VotingApp.git
 cd VotingApp
 mv .env.tmpl .env
-# Fill in the missing values in .env
 
 # Start the log collector
 docker-compose up -d --build fluentd
